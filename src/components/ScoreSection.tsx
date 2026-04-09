@@ -1,5 +1,6 @@
-import { useRef, useState, useCallback } from "react";
-import { Upload, CheckCircle, Shield, Clock, BarChart3 } from "lucide-react";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Upload, CheckCircle, FileText, Shield, Clock, BarChart3 } from "lucide-react";
 import { ScrollReveal } from "./ScrollReveal";
 
 const STEPS = [
@@ -9,6 +10,7 @@ const STEPS = [
 ];
 
 export function ScoreSection() {
+  const navigate = useNavigate();
   const [isDragging, setIsDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -17,53 +19,34 @@ export function ScoreSection() {
 
   const handleFile = (f: File) => {
     const ext = f.name.toLowerCase();
-    if (!ext.endsWith(".pdf") && !ext.endsWith(".docx") && !ext.endsWith(".doc")) {
-      setError("Only PDF or DOCX files are accepted");
-      return;
-    }
-    if (f.size > 5 * 1024 * 1024) {
-      setError("File size must not exceed 5MB");
-      return;
-    }
-    setError(null);
-    setFile(f);
+    if (!ext.endsWith(".pdf") && !ext.endsWith(".docx") && !ext.endsWith(".doc")) { setError("Only PDF or DOCX files are accepted"); return; }
+    if (f.size > 5 * 1024 * 1024) { setError("File size must not exceed 5MB"); return; }
+    setError(null); setFile(f);
   };
 
   return (
-    <section id="score" className="relative py-24 px-6 overflow-hidden cosmic-bg">
-      <div className="grid-bg absolute inset-0" />
+    <section className="py-24 px-6 relative overflow-hidden cosmic-bg">
       <div className="relative z-10 max-w-4xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-medium mb-4">
-              ✦ AI-Powered Analysis
-            </span>
-            <h2 className="section-heading mb-4">
-              Get your resume score <span className="purple-text">now!</span>
-            </h2>
-            <p className="section-subheading mx-auto">
-              Upload your resume and get an instant ATS compatibility report powered by AI.
-            </p>
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-medium mb-4">✦ AI-Powered Analysis</span>
+            <h2 className="section-heading mb-4">Get your resume score <span className="warm-text">now!</span></h2>
+            <p className="section-subheading mx-auto">Upload your resume and get instant ATS compatibility analysis with actionable improvement tips.</p>
           </div>
         </ScrollReveal>
 
         <ScrollReveal delay={100}>
-          {/* Steps */}
-          <div className="flex items-center justify-center gap-4 mb-10">
+          <div className="flex items-center justify-center gap-4 mb-12">
             {STEPS.map((step, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${i < currentStep ? "bg-primary text-primary-foreground" : i === currentStep ? "bg-primary/20 text-primary border border-primary/30" : "bg-secondary text-muted-foreground"}`}>
-                    {i < currentStep ? <CheckCircle className="w-4 h-4" /> : step.num}
-                  </div>
-                  <div>
-                    <div className="text-xs font-medium text-foreground">{step.label}</div>
-                    <div className="text-[10px] text-muted-foreground">{step.desc}</div>
-                  </div>
+              <div key={i} className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${i <= currentStep ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground"}`}>
+                  {i < currentStep ? <CheckCircle className="w-5 h-5" /> : step.num}
                 </div>
-                {i < STEPS.length - 1 && (
-                  <div className={`w-12 h-px ${i < currentStep ? "bg-primary" : "bg-border"}`} />
-                )}
+                <div className="hidden sm:block">
+                  <div className="text-sm font-medium text-foreground">{step.label}</div>
+                  <div className="text-xs text-muted-foreground">{step.desc}</div>
+                </div>
+                {i < STEPS.length - 1 && <div className="w-12 h-px bg-border ml-2" />}
               </div>
             ))}
           </div>
@@ -71,68 +54,32 @@ export function ScoreSection() {
 
         <ScrollReveal delay={200}>
           <div className="max-w-lg mx-auto">
-            <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
-
-            <div className="glass-card rounded-2xl p-6">
-              <div
-                onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-                onDragLeave={() => setIsDragging(false)}
-                onDrop={(e) => { e.preventDefault(); setIsDragging(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
-                onClick={() => { if (!file) fileInputRef.current?.click(); }}
-                className={`rounded-xl border-2 border-dashed p-8 text-center cursor-pointer transition-all ${isDragging ? "border-primary/60 scale-[1.01]" : file ? "border-primary/30" : "border-border hover:border-primary/30"}`}
-                style={{ background: isDragging ? "rgba(124,94,240,0.08)" : "rgba(255,255,255,0.01)" }}
-              >
-                {file ? (
-                  <div>
-                    <CheckCircle className="w-10 h-10 text-primary mx-auto mb-3" />
-                    <p className="text-foreground font-medium">Upload Complete!</p>
-                    <p className="text-sm text-muted-foreground mt-1">Your resume is ready for analysis</p>
-                    <div className="flex items-center justify-center gap-2 mt-3">
-                      <span className="text-xs text-primary">{file.name}</span>
-                      <button onClick={(e) => { e.stopPropagation(); setFile(null); setError(null); }} className="text-xs text-muted-foreground hover:text-foreground">✕</button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <Upload className="w-10 h-10 text-primary/50 mx-auto mb-3" />
-                    <p className="text-foreground font-medium mb-1">{isDragging ? "Drop it here!" : "Drop your resume or click to browse"}</p>
-                    <p className="text-xs text-muted-foreground">Supports PDF, DOCX up to 5MB</p>
-                  </>
-                )}
-              </div>
-
-              <div className="mt-4 space-y-3">
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  className="w-full group flex items-center justify-center gap-2 py-3.5 rounded-xl text-[14px] font-bold text-white transition-all hover:scale-[1.02]"
-                  style={{ background: "linear-gradient(135deg, #7c5ef0, #6352dc)", boxShadow: "0 4px 20px rgba(124,94,240,0.35)" }}
-                >
-                  {file ? "Start Analysis →" : "Upload Resume"}
-                </button>
-
-                {!file && (
-                  <p className="text-center text-[10px] text-muted-foreground flex items-center justify-center gap-1">
-                    <Shield className="w-3 h-3" /> Privacy guaranteed
-                  </p>
-                )}
-              </div>
-
-              {error && (
-                <div className="mt-3 p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-xs text-center">
-                  {error}
+            <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
+            <div
+              className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all ${isDragging ? "border-primary bg-primary/5" : file ? "border-primary/40 bg-primary/5" : "border-border hover:border-primary/30"}`}
+              onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+              onDragLeave={() => setIsDragging(false)}
+              onDrop={(e) => { e.preventDefault(); setIsDragging(false); e.dataTransfer.files[0] && handleFile(e.dataTransfer.files[0]); }}
+              onClick={() => !file && fileInputRef.current?.click()}
+            >
+              {file ? (
+                <div className="space-y-3">
+                  <FileText className="w-8 h-8 text-primary mx-auto" />
+                  <p className="text-sm text-foreground font-medium">{file.name}</p>
+                  <button onClick={() => navigate("/resume-analysis")} className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all">Analyze Now</button>
                 </div>
+              ) : (
+                <>
+                  <Upload className="w-8 h-8 text-primary mx-auto mb-3" />
+                  <p className="text-sm text-foreground font-medium">Drop your resume here</p>
+                  <p className="text-xs text-muted-foreground mt-1">PDF, DOC, DOCX · Max 5MB</p>
+                </>
               )}
             </div>
-
+            {error && <p className="text-xs text-destructive mt-2 text-center">{error}</p>}
             <div className="flex items-center justify-center gap-6 mt-6">
-              {[
-                { icon: BarChart3, text: "ATS Compatible" },
-                { icon: Shield, text: "256-bit Encrypted" },
-                { icon: Clock, text: "Auto-deleted in 24h" },
-              ].map(({ icon: Icon, text }, i) => (
-                <span key={i} className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                  <Icon className="w-3.5 h-3.5 text-primary/50" />{text}
-                </span>
+              {[{ icon: Shield, text: "ATS Verified" }, { icon: Clock, text: "30 Sec Analysis" }, { icon: BarChart3, text: "Detailed Report" }].map((item, i) => (
+                <div key={i} className="flex items-center gap-1.5 text-xs text-muted-foreground"><item.icon className="w-3.5 h-3.5 text-primary" /> {item.text}</div>
               ))}
             </div>
           </div>

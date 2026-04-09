@@ -39,7 +39,7 @@ export function FAQSection() {
               ✦ FAQ
             </span>
             <h2 className="section-heading mb-4">
-              Frequently Asked <span className="purple-text">Questions</span>
+              Frequently Asked <span className="warm-text">Questions</span>
             </h2>
             <p className="section-subheading mx-auto">
               Everything you need to know about JOBRA and how it works.

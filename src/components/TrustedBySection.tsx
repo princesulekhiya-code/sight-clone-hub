@@ -4,16 +4,16 @@ const BRANDS = [
 ];
 
 export function TrustedBySection() {
-  const doubled = [...BRANDS, ...BRANDS];
-
   return (
-    <section className="py-12 overflow-hidden border-y border-border/30">
-      <p className="text-center text-xs text-muted-foreground tracking-widest uppercase mb-6">Trusted by professionals at</p>
-      <div className="relative">
-        <div className="flex gap-16 whitespace-nowrap" style={{ animation: "marquee-scroll 30s linear infinite" }}>
-          {doubled.map((brand, i) => (
-            <span key={i} className="text-lg font-semibold text-muted-foreground/40 select-none">{brand}</span>
-          ))}
+    <section className="py-16 px-6 border-y border-border/50">
+      <div className="max-w-6xl mx-auto">
+        <p className="text-center text-xs text-muted-foreground uppercase tracking-widest mb-8">Trusted by professionals at</p>
+        <div className="relative overflow-hidden">
+          <div className="flex gap-16 animate-[marquee-scroll_30s_linear_infinite]" style={{ width: "max-content" }}>
+            {[...BRANDS, ...BRANDS].map((brand, i) => (
+              <span key={i} className="text-sm text-muted-foreground/60 font-medium whitespace-nowrap">{brand}</span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
