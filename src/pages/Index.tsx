@@ -1,16 +1,50 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import TimingSection from "@/components/TimingSection";
+import ClaritySection from "@/components/ClaritySection";
+import ListenReadSection from "@/components/ListenReadSection";
+import SwitchCallsSection from "@/components/SwitchCallsSection";
+import BeFirstSection from "@/components/BeFirstSection";
+import ComparisonSection from "@/components/ComparisonSection";
+import FooterCTA from "@/components/FooterCTA";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <HeroSection />
+      <div className="divider-gradient" />
+      <TimingSection />
+      <div className="divider-gradient" />
+      <ClaritySection />
+      <div className="divider-gradient" />
+      <ListenReadSection />
+      <div className="divider-gradient" />
+      <SwitchCallsSection />
+      <div className="divider-gradient" />
+      <BeFirstSection />
+      <div className="divider-gradient" />
+      <ComparisonSection />
+      <FooterCTA />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
