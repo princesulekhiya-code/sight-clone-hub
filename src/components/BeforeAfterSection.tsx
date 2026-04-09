@@ -59,7 +59,7 @@ function ScoreRing({ score, color, size = 100 }: { score: number; color: string;
   );
 }
 
-function ResumeCard({ data, active }: { data: typeof beforeData; active: boolean }) {
+function ResumeCard({ data, active }: { data: { score: number; label: string; color: string; items: { text: string; type: "bad" | "good" }[]; breakdown: { label: string; value: number }[] }; active: boolean }) {
   const isBefore = data.score < 50;
 
   return (
