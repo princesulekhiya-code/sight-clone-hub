@@ -84,7 +84,7 @@ export function RoadmapSection() {
               Product Roadmap
             </span>
             <h2 className="section-heading mb-4">
-              From resume to <span className="purple-text">dream job</span>
+              From resume to <span className="warm-text">dream job</span>
             </h2>
             <p className="section-subheading mx-auto">
               5 powerful phases — from resume analysis to AI interview coaching — all in one platform.

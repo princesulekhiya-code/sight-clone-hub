@@ -222,7 +222,7 @@ export function HowItWorksSection() {
               ✦ How It Works
             </span>
             <h2 className="section-heading mb-4">
-              Your complete career <span className="purple-text">pipeline</span>
+              Your complete career <span className="warm-text">pipeline</span>
             </h2>
             <p className="section-subheading mx-auto">
               From resume upload to dream job — 7 steps, fully guided by AI.
