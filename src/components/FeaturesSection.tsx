@@ -94,15 +94,9 @@ export function FeaturesSection() {
       <div className="max-w-6xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-medium mb-4">
-              ✦ Powerful Tools
-            </span>
-            <h2 className="section-heading mb-4">
-              Everything you need to <span className="purple-text">land your dream job</span>
-            </h2>
-            <p className="section-subheading mx-auto">
-              Six powerful AI tools working together to analyze, optimize, and position your career for success.
-            </p>
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-medium mb-4">✦ Powerful Tools</span>
+            <h2 className="section-heading mb-4">Everything you need to <span className="warm-text">land your dream job</span></h2>
+            <p className="section-subheading mx-auto">Six powerful AI tools working together to analyze, optimize, and position your career for success.</p>
           </div>
         </ScrollReveal>
 
@@ -118,7 +112,7 @@ export function FeaturesSection() {
                   className={`glow-border-hover glass-card rounded-2xl p-6 cursor-pointer transition-all duration-300 ${isActive ? "scale-[1.02]" : ""}`}
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "hsl(var(--primary) / 0.1)" }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-primary/10">
                       <Icon className="w-5 h-5 text-primary" />
                     </div>
                     <span className="text-xs text-muted-foreground font-mono">{feature.num}</span>
