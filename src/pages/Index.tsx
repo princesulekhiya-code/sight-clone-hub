@@ -1,48 +1,40 @@
-import { useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
-import TimingSection from "@/components/TimingSection";
-import ClaritySection from "@/components/ClaritySection";
-import ListenReadSection from "@/components/ListenReadSection";
-import SwitchCallsSection from "@/components/SwitchCallsSection";
-import BeFirstSection from "@/components/BeFirstSection";
-import ComparisonSection from "@/components/ComparisonSection";
-import FooterCTA from "@/components/FooterCTA";
+import { Header } from "@/components/Header";
+import { HeroSection } from "@/components/HeroSection";
+import { TrustedBySection } from "@/components/TrustedBySection";
+import { ScoreSection } from "@/components/ScoreSection";
+import { BeforeAfterSection } from "@/components/BeforeAfterSection";
+import { FeaturesSection } from "@/components/FeaturesSection";
+import { HowItWorksSection } from "@/components/HowItWorksSection";
+import { RoadmapSection } from "@/components/RoadmapSection";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { PricingSection } from "@/components/PricingSection";
+import { FAQSection } from "@/components/FAQSection";
+import { CTASection } from "@/components/CTASection";
+import { Footer } from "@/components/Footer";
 
 const Index = () => {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
+      <Header />
       <HeroSection />
-      <div className="divider-gradient" />
-      <TimingSection />
-      <div className="divider-gradient" />
-      <ClaritySection />
-      <div className="divider-gradient" />
-      <ListenReadSection />
-      <div className="divider-gradient" />
-      <SwitchCallsSection />
-      <div className="divider-gradient" />
-      <BeFirstSection />
-      <div className="divider-gradient" />
-      <ComparisonSection />
-      <FooterCTA />
+      <TrustedBySection />
+      <ScoreSection />
+      <div className="flow-line-h" />
+      <BeforeAfterSection />
+      <div className="flow-line-h" />
+      <FeaturesSection />
+      <div className="flow-line-h" />
+      <HowItWorksSection />
+      <div className="flow-line-h" />
+      <RoadmapSection />
+      <div className="flow-line-h" />
+      <TestimonialsSection />
+      <div className="flow-line-h" />
+      <PricingSection />
+      <div className="flow-line-h" />
+      <FAQSection />
+      <CTASection />
+      <Footer />
     </div>
   );
 };
